@@ -1,4 +1,4 @@
-// Image of Yours — main app (scenes, video media, WebCodecs export, project files)
+// Images of Yours — main app (scenes, video media, WebCodecs export, project files)
 import * as THREE from 'three';
 import { IoyEngine, ASPECTS, TRANSITIONS, makeDemoTexture } from './engine.js';
 import { TEMPLATES, CATEGORIES, templateById } from './templates.js';
@@ -535,7 +535,7 @@ async function saveProject() {
 async function openProjectFile(file) {
   try {
     const project = JSON.parse(await file.text());
-    if (!['ioy', 'glide'].includes(project.app) || !project.version) throw new Error('Not an Image of Yours project');
+    if (!['ioy', 'glide'].includes(project.app) || !project.version) throw new Error('Not an Images of Yours project');
     // reset media
     for (let i = 0; i < state.slots; i++) disposeMedia(i);
     state.media = {};

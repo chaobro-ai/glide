@@ -1,4 +1,4 @@
-// Image of Yours timeline — evaluates multi-scene timeline with overlapping transitions
+// Images of Yours timeline — evaluates multi-scene timeline with overlapping transitions
 import { TRANSITIONS } from './engine.js';
 import { templateById } from './templates.js';
 

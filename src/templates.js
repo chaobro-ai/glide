@@ -1,4 +1,4 @@
-// Image of Yours template library
+// Images of Yours template library
 // Each template: { id, name, cat, slots, pose(i,n,p) -> {x,y,z,rx,ry,rz,s,o} }
 // p = loop progress [0,1). All templates loop seamlessly.
 // Piece-based templates add: pieces:{cols,rows}, piecePose(i,j,n,p)

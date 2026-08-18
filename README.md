@@ -1,4 +1,4 @@
-# Image of Yours
+# Images of Yours
 
 **Your images, set in motion.** Turn your still images into cinematic motion showcases — pick a template, drop in your work, export HD video in seconds. Everything runs in your browser.
 

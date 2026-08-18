@@ -1,4 +1,4 @@
-// Image of Yours exporter — WebCodecs offline HD render, with MediaRecorder fallback
+// Images of Yours exporter — WebCodecs offline HD render, with MediaRecorder fallback
 import { Muxer as Mp4Muxer, ArrayBufferTarget as Mp4Target } from 'mp4-muxer';
 import { Muxer as WebmMuxer, ArrayBufferTarget as WebmTarget } from 'webm-muxer';
 

@@ -1,4 +1,4 @@
-// Image of Yours engine — dual-stage renderer with transition compositing
+// Images of Yours engine — dual-stage renderer with transition compositing
 // One WebGLRenderer, three scenes: stageA, stageB, compositor (fullscreen quad).
 import * as THREE from 'three';
 
@@ -355,7 +355,7 @@ export function makeDemoTexture(i) {
   ctx.fillText(`Showcase ${String(i + 1).padStart(2, '0')}`, 62, 128);
   ctx.font = '16px system-ui';
   ctx.fillStyle = 'rgba(255,255,255,0.7)';
-  ctx.fillText('image of yours', 62, 158);
+  ctx.fillText('images of yours', 62, 158);
   for (let k = 0; k < 3; k++) {
     ctx.fillStyle = 'rgba(255,255,255,0.08)';
     ctx.beginPath(); ctx.roundRect(40 + k * (w - 80) / 3 + k * 8, 230, (w - 100) / 3, 120, 10); ctx.fill();
