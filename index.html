@@ -18,6 +18,15 @@
     </div>
     <input id="proj-title" class="title-input" value="Untitled showcase" spellcheck="false" />
     <div class="top-actions">
+      <button id="new-project-btn" class="icon-btn" title="New project">
+        <svg width="15" height="15" viewBox="0 0 24 24" fill="none"><path d="M12 5v14M5 12h14" stroke="currentColor" stroke-width="1.8" stroke-linecap="round"/></svg>
+      </button>
+      <button id="open-project-btn" class="icon-btn" title="Open project (.glide)">
+        <svg width="15" height="15" viewBox="0 0 24 24" fill="none"><path d="M4 8V6a2 2 0 0 1 2-2h4l2 2h6a2 2 0 0 1 2 2v10a2 2 0 0 1-2 2H6a2 2 0 0 1-2-2V8Z" stroke="currentColor" stroke-width="1.8" stroke-linejoin="round"/></svg>
+      </button>
+      <button id="save-project-btn" class="icon-btn" title="Save project (.glide)">
+        <svg width="15" height="15" viewBox="0 0 24 24" fill="none"><path d="M5 4h11l3 3v13a1 1 0 0 1-1 1H5a1 1 0 0 1-1-1V5a1 1 0 0 1 1-1Z" stroke="currentColor" stroke-width="1.8" stroke-linejoin="round"/><path d="M8 4v5h7V4M8 20v-6h8v6" stroke="currentColor" stroke-width="1.8" stroke-linejoin="round"/></svg>
+      </button>
       <button id="theme-btn" class="icon-btn" title="Appearance">
         <svg width="15" height="15" viewBox="0 0 24 24" fill="none"><path d="M12 3a9 9 0 1 0 9 9 7 7 0 0 1-9-9Z" stroke="currentColor" stroke-width="1.8" stroke-linejoin="round"/></svg>
       </button>
@@ -35,6 +44,13 @@
     <!-- Stage -->
     <main id="stage">
       <div id="canvas-wrap"><canvas id="view"></canvas></div>
+
+      <!-- Scene strip -->
+      <div id="scene-strip">
+        <span class="strip-label">Scenes</span>
+        <div id="scene-bar"></div>
+      </div>
+
       <div id="timeline">
         <div id="keyframes-panel">
           <div class="kf-row" data-track="zoom">
@@ -53,14 +69,29 @@
           <button id="restart-btn" class="round-btn" title="Restart">
             <svg width="13" height="13" viewBox="0 0 24 24" fill="none"><path d="M4 5v6h6M20 12a8 8 0 1 1-2.34-5.66" stroke="currentColor" stroke-width="2" stroke-linecap="round"/></svg>
           </button>
-          <input id="scrub" type="range" min="0" max="16" step="0.01" value="0" />
-          <span id="time-readout">0.0s / 16.0s</span>
+          <input id="scrub" type="range" min="0" max="8" step="0.01" value="0" />
+          <span id="time-readout">0.0s / 8.0s</span>
         </div>
       </div>
     </main>
 
     <!-- Inspector -->
     <aside id="inspector">
+      <section class="card">
+        <h3>Scene</h3>
+        <label class="ctl">Duration <b id="scene-dur-val">8</b>s
+          <input id="scene-duration" type="range" min="2" max="20" step="0.5" value="8" />
+        </label>
+        <label class="ctl">Transition to next
+          <select id="scene-transition" class="select">
+            <option value="crossfade">Crossfade</option>
+            <option value="push">Push</option>
+            <option value="zoom">Zoom Through</option>
+            <option value="wipe">Diagonal Wipe</option>
+            <option value="none">None (cut)</option>
+          </select>
+        </label>
+      </section>
       <section class="card">
         <h3>Frame</h3>
         <div id="aspect-btns" class="segmented">
@@ -74,7 +105,7 @@
       <section class="card">
         <h3>Media <span class="head-badge"><span id="slot-count-label">12</span> slots</span></h3>
         <div class="stepper">
-          <span class="stepper-label">Images</span>
+          <span class="stepper-label">Images / videos</span>
           <span class="step-ctl">
             <button id="count-dec" class="step-btn">−</button>
             <b id="count-val">12</b>
@@ -83,16 +114,13 @@
         </div>
         <div id="slots"></div>
         <div class="media-actions">
-          <button id="add-images-btn" class="secondary-btn">Add Images</button>
+          <button id="add-images-btn" class="secondary-btn">Add Media</button>
           <button id="demo-images-btn" class="tertiary-btn">Demo</button>
           <button id="clear-images-btn" class="tertiary-btn danger">Clear</button>
         </div>
       </section>
       <section class="card">
-        <h3>Settings</h3>
-        <label class="ctl">Duration <b id="dur-val">16</b>s
-          <input id="duration" type="range" min="4" max="30" step="0.5" value="16" />
-        </label>
+        <h3>Camera & Look</h3>
         <label class="ctl">Camera Zoom <b id="zoom-val">1.00</b> <button class="kf-add" data-track="zoom" title="Add keyframe at playhead">◇</button>
           <input id="kf-zoom" type="range" min="0.5" max="2.2" step="0.01" value="1" />
         </label>
@@ -110,16 +138,33 @@
   <div id="export-modal" class="modal hidden">
     <div class="modal-card">
       <h3>Export</h3>
-      <p class="modal-sub">Records one full loop in real time. Keep this tab visible.</p>
-      <div class="export-row">
-        <label><input type="radio" name="fmt" value="mp4" checked /> MP4</label>
-        <label><input type="radio" name="fmt" value="webm" /> WebM</label>
-        <span id="fmt-note" class="note"></span>
+      <p class="modal-sub">Offline HD render via WebCodecs — resolution and framerate independent.</p>
+      <div class="export-grid">
+        <label class="ctl">Format
+          <span class="radio-row">
+            <label><input type="radio" name="fmt" value="mp4" checked /> MP4</label>
+            <label><input type="radio" name="fmt" value="webm" /> WebM</label>
+          </span>
+        </label>
+        <label class="ctl">Resolution
+          <select id="export-res" class="select">
+            <option value="720p">720p</option>
+            <option value="1080p" selected>1080p</option>
+            <option value="1440p">1440p (2K)</option>
+          </select>
+        </label>
+        <label class="ctl">Frame rate
+          <select id="export-fps" class="select">
+            <option value="30">30 fps</option>
+            <option value="60" selected>60 fps</option>
+          </select>
+        </label>
       </div>
-      <p class="note">Duration: <span id="export-dur">16</span>s</p>
+      <p class="note"><span id="engine-note"></span> · Duration: <span id="export-dur">8</span>s</p>
       <div id="export-progress-wrap" class="hidden">
         <div id="export-progress"></div>
       </div>
+      <p id="export-status" class="note"></p>
       <div class="modal-actions">
         <button id="export-cancel" class="secondary-btn">Cancel</button>
         <button id="export-go" class="primary-btn">Start Export</button>
@@ -127,7 +172,8 @@
     </div>
   </div>
 
-  <input id="file-input" type="file" accept="image/*" multiple hidden />
+  <input id="file-input" type="file" accept="image/*,video/*" multiple hidden />
+  <input id="project-file-input" type="file" accept=".glide,application/json" hidden />
   <div id="toast" class="hidden"></div>
   <script type="module" src="/src/main.js"></script>
 </body>
