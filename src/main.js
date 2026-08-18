@@ -628,7 +628,7 @@ const splash = $('#splash');
 function dismissSplash() {
   if (!splash || splash.classList.contains('gone')) return;
   splash.classList.add('gone');
-  setTimeout(() => splash.remove(), 600);
+  // Note: splash stays in the DOM (hidden) so the h1 remains for SEO/AT.
 }
 splash?.addEventListener('click', dismissSplash);
 window.addEventListener('keydown', dismissSplash, { once: true });
