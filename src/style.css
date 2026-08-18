@@ -1,4 +1,4 @@
-/* Glide — Apple-flavored design showcase studio */
+/* Image of Yours — Apple-flavored image motion studio */
 * { margin: 0; padding: 0; box-sizing: border-box; }
 :root {
   --bg: #f5f5f7;
@@ -48,9 +48,44 @@ body {
   -webkit-backdrop-filter: saturate(180%) blur(20px);
   border-bottom: 1px solid var(--border);
 }
-.logo { display: flex; align-items: center; gap: 8px; color: var(--text); user-select: none; }
-.logo svg { color: var(--accent); }
-.logo-text { font-weight: 700; font-size: 16px; letter-spacing: -0.01em; }
+.logo { display: flex; align-items: center; gap: 9px; color: var(--text); user-select: none; cursor: default; }
+.logo-mark { flex-shrink: 0; filter: drop-shadow(0 1px 3px rgba(94,92,230,.35)); }
+.logo-text {
+  font-weight: 700; font-size: 15.5px; letter-spacing: -0.015em;
+  background: linear-gradient(100deg, #0a84ff, #5e5ce6 55%, #bf5af2);
+  -webkit-background-clip: text; background-clip: text; color: transparent;
+  white-space: nowrap;
+}
+.logo-text em { font-style: normal; font-weight: 400; opacity: .75; }
+
+/* ---------- splash ---------- */
+#splash {
+  position: fixed; inset: 0; z-index: 100;
+  display: flex; flex-direction: column; align-items: center; justify-content: center; gap: 14px;
+  background: var(--bg);
+  cursor: pointer;
+  transition: opacity .5s ease, visibility .5s ease;
+}
+#splash.gone { opacity: 0; visibility: hidden; pointer-events: none; }
+.splash-mark svg { width: 84px; height: 84px; filter: drop-shadow(0 8px 32px rgba(94,92,230,.4)); animation: splash-pop .7s cubic-bezier(.2,1.4,.4,1) both; }
+.splash-title {
+  font-size: 38px; font-weight: 800; letter-spacing: -0.03em;
+  background: linear-gradient(100deg, #0a84ff, #5e5ce6 55%, #bf5af2);
+  -webkit-background-clip: text; background-clip: text; color: transparent;
+  animation: splash-up .6s .15s cubic-bezier(.2,.8,.2,1) both;
+}
+.splash-slogan {
+  font-size: 16px; color: var(--muted2); font-weight: 400; letter-spacing: .01em;
+  animation: splash-up .6s .28s cubic-bezier(.2,.8,.2,1) both;
+}
+.splash-hint {
+  margin-top: 34px; font-size: 12px; color: var(--muted); letter-spacing: .08em;
+  text-transform: uppercase;
+  animation: splash-pulse 2.2s 1s ease-in-out infinite;
+}
+@keyframes splash-pop { from { transform: scale(.6); opacity: 0; } to { transform: scale(1); opacity: 1; } }
+@keyframes splash-up { from { transform: translateY(14px); opacity: 0; } to { transform: translateY(0); opacity: 1; } }
+@keyframes splash-pulse { 0%,100% { opacity: .45; } 50% { opacity: 1; } }
 .title-input {
   flex: 1; max-width: 340px;
   background: transparent; border: 1px solid transparent;

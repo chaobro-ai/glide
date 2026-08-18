@@ -1,6 +1,6 @@
-// Glide — main app (scenes, video media, WebCodecs export, project files)
+// Image of Yours — main app (scenes, video media, WebCodecs export, project files)
 import * as THREE from 'three';
-import { GlideEngine, ASPECTS, TRANSITIONS, makeDemoTexture } from './engine.js';
+import { IoyEngine, ASPECTS, TRANSITIONS, makeDemoTexture } from './engine.js';
 import { TEMPLATES, CATEGORIES, templateById } from './templates.js';
 import { Timeline } from './timeline.js';
 import { exportWebCodecs, exportRealtime, webCodecsSupported } from './exporter.js';
@@ -27,7 +27,7 @@ const state = {
 };
 
 const timeline = new Timeline();
-const engine = new GlideEngine($('#view'));
+const engine = new IoyEngine($('#view'));
 engine.setBackground(state.background);
 engine.setSlotCount(state.slots);
 
@@ -458,7 +458,7 @@ $('#export-go').onclick = async () => {
     }
     const a = document.createElement('a');
     a.href = URL.createObjectURL(result.blob);
-    a.download = `glide-${Date.now()}.${result.ext}`;
+    a.download = `ioy-${Date.now()}.${result.ext}`;
     a.click();
     setTimeout(() => URL.revokeObjectURL(a.href), 8000);
     toast(`Export complete — ${result.ext.toUpperCase()}, ${width}×${height}@${fps}fps, ${(result.blob.size / 1048576).toFixed(1)} MB (${result.engine})`);
@@ -478,7 +478,7 @@ $('#export-go').onclick = async () => {
   updatePlayBtn();
 };
 
-// ------------------------------------------------------------ project files (.glide) ----
+// ------------------------------------------------------------ project files (.ioy) ----
 const canvasToDataURL = (img, type = 'image/png') => {
   const cv = document.createElement('canvas');
   cv.width = img.width; cv.height = img.height;
@@ -514,7 +514,7 @@ async function saveProject() {
     }
   }
   const project = {
-    version: 1, app: 'glide', savedAt: new Date().toISOString(),
+    version: 1, app: 'ioy', savedAt: new Date().toISOString(),
     title: state.title,
     settings: { aspect: state.aspect, background: state.background, slots: state.slots },
     scenes: state.scenes,
@@ -525,7 +525,7 @@ async function saveProject() {
   const blob = new Blob([json], { type: 'application/json' });
   const a = document.createElement('a');
   a.href = URL.createObjectURL(blob);
-  a.download = `${(state.title || 'glide-project').replace(/\s+/g, '-').toLowerCase()}.glide`;
+  a.download = `${(state.title || 'ioy-project').replace(/\s+/g, '-').toLowerCase()}.ioy`;
   a.click();
   setTimeout(() => URL.revokeObjectURL(a.href), 5000);
   const skipped = slots.filter(s => s?.type === 'video' && !s.data).length;
@@ -535,7 +535,7 @@ async function saveProject() {
 async function openProjectFile(file) {
   try {
     const project = JSON.parse(await file.text());
-    if (project.app !== 'glide' || !project.version) throw new Error('Not a Glide project');
+    if (!['ioy', 'glide'].includes(project.app) || !project.version) throw new Error('Not an Image of Yours project');
     // reset media
     for (let i = 0; i < state.slots; i++) disposeMedia(i);
     state.media = {};
@@ -622,6 +622,18 @@ $('#new-project-btn').onclick = () => {
   toast('New project');
 };
 $('#proj-title').onchange = e => { state.title = e.target.value.trim() || 'Untitled showcase'; };
+
+// ------------------------------------------------------------ splash ----
+const splash = $('#splash');
+function dismissSplash() {
+  if (!splash || splash.classList.contains('gone')) return;
+  splash.classList.add('gone');
+  setTimeout(() => splash.remove(), 600);
+}
+splash?.addEventListener('click', dismissSplash);
+window.addEventListener('keydown', dismissSplash, { once: true });
+// auto-dismiss after 2.8s so the app is never blocked
+setTimeout(dismissSplash, 2800);
 
 // ------------------------------------------------------------ theme ----
 $('#theme-btn').onclick = () => document.body.classList.toggle('dark');

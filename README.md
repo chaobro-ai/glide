@@ -1,62 +1,62 @@
-# Glide
+# Image of Yours
 
-**Motion templates for design showcases.** Turn static designs into stunning motion showcases — pick a template, drop in your work, export MP4/WebM in seconds. Everything runs in your browser.
+**Your images, set in motion.** Turn your still images into cinematic motion showcases — pick a template, drop in your work, export HD video in seconds. Everything runs in your browser.
 
-![Glide](https://img.shields.io/badge/status-beta-blue) ![License](https://img.shields.io/badge/license-MIT-lightgrey)
+Live at **[ioy.ai](https://ioy.ai)**
 
 ## Features
 
-- **59 motion templates** across 9 categories: 3D & Perspective, Multiscene, Isometric, Orbit, Carousel & Flow, Grid, Spotlight & Focus, Reveal & Wipe, Stack & Scatter
-- **Media slots** — drag & drop or batch-upload your own images (2–20), or use built-in demo placeholders
-- **Aspect ratios** — 16:9, 4:3, 1:1, 4:5, 9:16
-- **Timeline & keyframes** — camera Zoom and Tilt tracks with diamond keyframes, smooth interpolation
-- **Real-time export** — records one full loop via `captureStream()` + MediaRecorder → MP4 (H.264) or WebM
-- **Light & dark themes** — Apple-flavored design, frosted-glass top bar, SF Pro typography
-- **Zero backend** — pure client-side; no account, no uploads to a server
+- **59 motion templates** across 9 categories (3D & perspective, orbit, carousel & flow, grid, spotlight, reveal & wipe, stack & scatter, isometric, multiscene)
+- **Multi-scene timelines** with overlapping transitions (crossfade, push, zoom-through, diagonal wipe)
+- **Images & videos** as media — drag & drop into slots, scene-local playback sync
+- **Keyframe camera control** — zoom & tilt keyframes with smooth interpolation
+- **WebCodecs offline HD export** — 720p / 1080p / 1440p at 30/60 fps, frame-accurate and faster than realtime (MediaRecorder fallback included)
+- **`.ioy` project files** — save / open / share; images embedded, small videos embedded too
+- **Apple-flavored UI** — light & dark, frosted glass top bar, SF Pro type stack, brand splash screen
+- 5 aspect ratios: 16:9 · 4:3 · 1:1 · 4:5 · 9:16
+- 100% client-side — no server, your media never leaves the browser
 
-## Tech Stack
+## Tech stack
 
-- [Vite](https://vite.dev/) + vanilla ES modules (no framework runtime)
-- [Three.js](https://threejs.org/) WebGL rendering
-- MediaRecorder API for video export
+- Vite + Three.js (WebGL)
+- Dual-stage render engine with GLSL transition compositor
+- WebCodecs + mp4-muxer / webm-muxer for offline encoding
+- captureStream + MediaRecorder as realtime fallback
+- Deployed on Cloudflare Pages behind an edge Worker on ioy.ai
 
-## Templates
+## Template system
 
-Each template is a pure parametric function `pose(i, n, p) → {x, y, z, rx, ry, rz, s, o}` mapping card index, count and loop progress `p ∈ [0,1)` to a transform. Piece-based templates (Stripe/Split/Mosaic Reveal) split the image into texture-cropped tiles via `piecePose(i, j, n, p)`. Adding a new template = adding one object to `src/templates.js`.
+Each template is a pure function `pose(i, n, p) → {x, y, z, rx, ry, rz, s, o}` mapping card index, card count, and loop progress to a transform. Piece-based templates (mosaic effects) add `piecePose(i, j, n, p)`. This makes templates trivially composable with scenes and transitions.
 
-## Getting Started
+## Quick start
 
 ```bash
 npm install
-npm run dev        # http://127.0.0.1:5173
+npm run dev      # local dev server
+npm run build    # production build → dist/
 ```
 
-### Production build
+## Deployment
 
 ```bash
-npm run build      # outputs dist/
-npm run preview
+wrangler pages deploy dist --project-name animos-clone --branch main
 ```
 
-### Deploy
+`ioy.ai` is served by the `animos-chaobro` Worker (route `ioy.ai/*`), which proxies the Pages production deployment.
 
-The site is deployed to Cloudflare Pages (`wrangler pages deploy dist`), with an optional edge Worker in `worker/` that reverse-proxies a custom domain to the Pages project.
-
-## Project Structure
+## Project structure
 
 ```
-├── index.html          # editor shell
-├── src/
-│   ├── main.js         # app logic: library, slots, keyframes, transport, export
-│   ├── scene.js        # Three.js render engine, card/piece management, demo textures
-│   ├── templates.js    # 59 motion template definitions (9 categories)
-│   └── style.css       # Apple-style design system (light/dark)
-└── worker/             # optional Cloudflare Worker (custom-domain proxy)
+index.html            # app shell, splash screen, brand assets
+public/favicon.svg    # brand mark
+src/main.js           # app logic: scenes, media, keyframes, export, projects
+src/engine.js         # dual-stage renderer + transition compositor
+src/timeline.js       # multi-scene timeline evaluator
+src/exporter.js       # WebCodecs + MediaRecorder export
+src/templates.js      # 59 templates
+src/style.css         # Apple-style design system
+worker/               # Cloudflare Worker proxy for ioy.ai
 ```
-
-## Keyboard
-
-- `Space` — play / pause
 
 ## License
 

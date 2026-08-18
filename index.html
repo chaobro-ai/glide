@@ -3,28 +3,65 @@
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>Glide — Motion templates for design showcases</title>
-  <meta name="description" content="Turn static designs into stunning motion showcases. Pick a template, drop in your work, export in seconds." />
+  <title>Image of Yours — Turn your images into motion</title>
+  <meta name="description" content="Image of Yours turns your still images into cinematic motion showcases. Pick a template, drop in your work, export in seconds — right in your browser." />
+  <meta property="og:title" content="Image of Yours" />
+  <meta property="og:description" content="Your images, set in motion. 59 templates, keyframe control, HD export." />
+  <meta property="og:type" content="website" />
+  <link rel="icon" type="image/svg+xml" href="/favicon.svg" />
   <link rel="stylesheet" href="/src/style.css" />
 </head>
 <body>
-  <header id="topbar">
-    <div class="logo">
-      <svg width="20" height="20" viewBox="0 0 24 24" fill="none" aria-hidden="true">
-        <rect x="3" y="3" width="18" height="18" rx="5.5" fill="currentColor" opacity="0.16"/>
-        <path d="M7 12.5L11 8.5L14.5 12L17 9.5" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+  <!-- Brand splash -->
+  <div id="splash">
+    <div class="splash-mark">
+      <svg width="64" height="64" viewBox="0 0 64 64" aria-hidden="true">
+        <defs>
+          <linearGradient id="sg" x1="0" y1="0" x2="64" y2="64" gradientUnits="userSpaceOnUse">
+            <stop offset="0" stop-color="#0a84ff"/>
+            <stop offset="0.55" stop-color="#5e5ce6"/>
+            <stop offset="1" stop-color="#bf5af2"/>
+          </linearGradient>
+        </defs>
+        <rect x="2" y="2" width="60" height="60" rx="16" fill="url(#sg)"/>
+        <rect x="14" y="17" width="36" height="30" rx="6" fill="none" stroke="#ffffff" stroke-width="4"/>
+        <circle cx="24" cy="27" r="3.6" fill="#ffffff"/>
+        <path d="M17 44 L28 33 L34 39 L41 31 L47 38 L47 41 Q47 47 41 47 L23 47 Q17 47 17 41 Z" fill="#ffffff"/>
+        <path d="M50 12 l1.7 3.9 3.9 1.7 -3.9 1.7 -1.7 3.9 -1.7 -3.9 -3.9 -1.7 3.9 -1.7 Z" fill="#ffffff" opacity="0.9"/>
       </svg>
-      <span class="logo-text">Glide</span>
+    </div>
+    <h1 class="splash-title">Image of Yours</h1>
+    <p class="splash-slogan">Your images, set in motion.</p>
+    <p class="splash-hint">Click anywhere to start</p>
+  </div>
+
+  <header id="topbar">
+    <div class="logo" title="Image of Yours">
+      <svg class="logo-mark" width="22" height="22" viewBox="0 0 64 64" aria-hidden="true">
+        <defs>
+          <linearGradient id="lg" x1="0" y1="0" x2="64" y2="64" gradientUnits="userSpaceOnUse">
+            <stop offset="0" stop-color="#0a84ff"/>
+            <stop offset="0.55" stop-color="#5e5ce6"/>
+            <stop offset="1" stop-color="#bf5af2"/>
+          </linearGradient>
+        </defs>
+        <rect x="2" y="2" width="60" height="60" rx="16" fill="url(#lg)"/>
+        <rect x="14" y="17" width="36" height="30" rx="6" fill="none" stroke="#ffffff" stroke-width="4"/>
+        <circle cx="24" cy="27" r="3.6" fill="#ffffff"/>
+        <path d="M17 44 L28 33 L34 39 L41 31 L47 38 L47 41 Q47 47 41 47 L23 47 Q17 47 17 41 Z" fill="#ffffff"/>
+        <path d="M50 12 l1.7 3.9 3.9 1.7 -3.9 1.7 -1.7 3.9 -1.7 -3.9 -3.9 -1.7 3.9 -1.7 Z" fill="#ffffff" opacity="0.9"/>
+      </svg>
+      <span class="logo-text">Image <em>of</em> Yours</span>
     </div>
     <input id="proj-title" class="title-input" value="Untitled showcase" spellcheck="false" />
     <div class="top-actions">
       <button id="new-project-btn" class="icon-btn" title="New project">
         <svg width="15" height="15" viewBox="0 0 24 24" fill="none"><path d="M12 5v14M5 12h14" stroke="currentColor" stroke-width="1.8" stroke-linecap="round"/></svg>
       </button>
-      <button id="open-project-btn" class="icon-btn" title="Open project (.glide)">
+      <button id="open-project-btn" class="icon-btn" title="Open project (.ioy)">
         <svg width="15" height="15" viewBox="0 0 24 24" fill="none"><path d="M4 8V6a2 2 0 0 1 2-2h4l2 2h6a2 2 0 0 1 2 2v10a2 2 0 0 1-2 2H6a2 2 0 0 1-2-2V8Z" stroke="currentColor" stroke-width="1.8" stroke-linejoin="round"/></svg>
       </button>
-      <button id="save-project-btn" class="icon-btn" title="Save project (.glide)">
+      <button id="save-project-btn" class="icon-btn" title="Save project (.ioy)">
         <svg width="15" height="15" viewBox="0 0 24 24" fill="none"><path d="M5 4h11l3 3v13a1 1 0 0 1-1 1H5a1 1 0 0 1-1-1V5a1 1 0 0 1 1-1Z" stroke="currentColor" stroke-width="1.8" stroke-linejoin="round"/><path d="M8 4v5h7V4M8 20v-6h8v6" stroke="currentColor" stroke-width="1.8" stroke-linejoin="round"/></svg>
       </button>
       <button id="theme-btn" class="icon-btn" title="Appearance">
@@ -173,7 +210,7 @@
   </div>
 
   <input id="file-input" type="file" accept="image/*,video/*" multiple hidden />
-  <input id="project-file-input" type="file" accept=".glide,application/json" hidden />
+  <input id="project-file-input" type="file" accept=".ioy,.glide,application/json" hidden />
   <div id="toast" class="hidden"></div>
   <script type="module" src="/src/main.js"></script>
 </body>

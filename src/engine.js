@@ -1,4 +1,4 @@
-// Glide engine — dual-stage renderer with transition compositing
+// Image of Yours engine — dual-stage renderer with transition compositing
 // One WebGLRenderer, three scenes: stageA, stageB, compositor (fullscreen quad).
 import * as THREE from 'three';
 
@@ -226,7 +226,7 @@ export const TRANSITIONS = {
   wipe: { id: 'wipe', name: 'Diagonal Wipe', mode: 3, dur: 0.9 },
 };
 
-export class GlideEngine {
+export class IoyEngine {
   constructor(canvas) {
     this.renderer = new THREE.WebGLRenderer({
       canvas, antialias: true, preserveDrawingBuffer: true, alpha: false,
@@ -355,7 +355,7 @@ export function makeDemoTexture(i) {
   ctx.fillText(`Showcase ${String(i + 1).padStart(2, '0')}`, 62, 128);
   ctx.font = '16px system-ui';
   ctx.fillStyle = 'rgba(255,255,255,0.7)';
-  ctx.fillText('glide · design in motion', 62, 158);
+  ctx.fillText('image of yours', 62, 158);
   for (let k = 0; k < 3; k++) {
     ctx.fillStyle = 'rgba(255,255,255,0.08)';
     ctx.beginPath(); ctx.roundRect(40 + k * (w - 80) / 3 + k * 8, 230, (w - 100) / 3, 120, 10); ctx.fill();
