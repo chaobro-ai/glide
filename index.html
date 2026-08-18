@@ -16,18 +16,17 @@
   <div id="splash">
     <div class="splash-mark">
       <svg width="64" height="64" viewBox="0 0 64 64" aria-hidden="true">
-        <defs>
-          <linearGradient id="sg" x1="0" y1="0" x2="64" y2="64" gradientUnits="userSpaceOnUse">
-            <stop offset="0" stop-color="#0a84ff"/>
-            <stop offset="0.55" stop-color="#5e5ce6"/>
-            <stop offset="1" stop-color="#bf5af2"/>
-          </linearGradient>
-        </defs>
-        <rect x="2" y="2" width="60" height="60" rx="16" fill="url(#sg)"/>
-        <rect x="14" y="17" width="36" height="30" rx="6" fill="none" stroke="#ffffff" stroke-width="4"/>
-        <circle cx="24" cy="27" r="3.6" fill="#ffffff"/>
-        <path d="M17 44 L28 33 L34 39 L41 31 L47 38 L47 41 Q47 47 41 47 L23 47 Q17 47 17 41 Z" fill="#ffffff"/>
-        <path d="M50 12 l1.7 3.9 3.9 1.7 -3.9 1.7 -1.7 3.9 -1.7 -3.9 -3.9 -1.7 3.9 -1.7 Z" fill="#ffffff" opacity="0.9"/>
+        <rect width="64" height="64" rx="14" fill="currentColor"/>
+        <rect x="9" y="21" width="32" height="32" rx="8.5" fill="none" stroke="var(--bg)" stroke-width="2.5" opacity="0.2"/>
+        <rect x="15.5" y="14.5" width="32" height="32" rx="8.5" fill="none" stroke="var(--bg)" stroke-width="2.5" opacity="0.45"/>
+        <clipPath id="sc">
+          <rect x="23" y="8" width="32" height="32" rx="8.5"/>
+        </clipPath>
+        <g clip-path="url(#sc)">
+          <rect x="23" y="8" width="32" height="32" fill="var(--bg)"/>
+          <circle cx="32.5" cy="17.5" r="3.2" fill="currentColor"/>
+          <path d="M23 42 L33 30.5 L38.5 36 L44 29.5 L55 40.5 L55 44 L23 44 Z" fill="currentColor"/>
+        </g>
       </svg>
     </div>
     <h1 class="splash-title">Image of Yours</h1>
@@ -37,21 +36,20 @@
 
   <header id="topbar">
     <div class="logo" title="Image of Yours">
-      <svg class="logo-mark" width="22" height="22" viewBox="0 0 64 64" aria-hidden="true">
-        <defs>
-          <linearGradient id="lg" x1="0" y1="0" x2="64" y2="64" gradientUnits="userSpaceOnUse">
-            <stop offset="0" stop-color="#0a84ff"/>
-            <stop offset="0.55" stop-color="#5e5ce6"/>
-            <stop offset="1" stop-color="#bf5af2"/>
-          </linearGradient>
-        </defs>
-        <rect x="2" y="2" width="60" height="60" rx="16" fill="url(#lg)"/>
-        <rect x="14" y="17" width="36" height="30" rx="6" fill="none" stroke="#ffffff" stroke-width="4"/>
-        <circle cx="24" cy="27" r="3.6" fill="#ffffff"/>
-        <path d="M17 44 L28 33 L34 39 L41 31 L47 38 L47 41 Q47 47 41 47 L23 47 Q17 47 17 41 Z" fill="#ffffff"/>
-        <path d="M50 12 l1.7 3.9 3.9 1.7 -3.9 1.7 -1.7 3.9 -1.7 -3.9 -3.9 -1.7 3.9 -1.7 Z" fill="#ffffff" opacity="0.9"/>
+      <svg class="logo-mark" width="24" height="24" viewBox="0 0 64 64" aria-hidden="true">
+        <rect width="64" height="64" rx="14" fill="currentColor"/>
+        <rect x="9" y="21" width="32" height="32" rx="8.5" fill="none" stroke="var(--panel)" stroke-width="2.5" opacity="0.2"/>
+        <rect x="15.5" y="14.5" width="32" height="32" rx="8.5" fill="none" stroke="var(--panel)" stroke-width="2.5" opacity="0.45"/>
+        <clipPath id="lc">
+          <rect x="23" y="8" width="32" height="32" rx="8.5"/>
+        </clipPath>
+        <g clip-path="url(#lc)">
+          <rect x="23" y="8" width="32" height="32" fill="var(--panel)"/>
+          <circle cx="32.5" cy="17.5" r="3.2" fill="currentColor"/>
+          <path d="M23 42 L33 30.5 L38.5 36 L44 29.5 L55 40.5 L55 44 L23 44 Z" fill="currentColor"/>
+        </g>
       </svg>
-      <span class="logo-text">Image <em>of</em> Yours</span>
+      <span class="logo-text">Image of Yours</span>
     </div>
     <input id="proj-title" class="title-input" value="Untitled showcase" spellcheck="false" />
     <div class="top-actions">

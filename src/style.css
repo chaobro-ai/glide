@@ -49,14 +49,12 @@ body {
   border-bottom: 1px solid var(--border);
 }
 .logo { display: flex; align-items: center; gap: 9px; color: var(--text); user-select: none; cursor: default; }
-.logo-mark { flex-shrink: 0; filter: drop-shadow(0 1px 3px rgba(94,92,230,.35)); }
+.logo-mark { flex-shrink: 0; color: var(--text); }
 .logo-text {
-  font-weight: 700; font-size: 15.5px; letter-spacing: -0.015em;
-  background: linear-gradient(100deg, #0a84ff, #5e5ce6 55%, #bf5af2);
-  -webkit-background-clip: text; background-clip: text; color: transparent;
+  font-weight: 650; font-size: 15.5px; letter-spacing: -0.022em;
+  color: var(--text);
   white-space: nowrap;
 }
-.logo-text em { font-style: normal; font-weight: 400; opacity: .75; }
 
 /* ---------- splash ---------- */
 #splash {
@@ -67,11 +65,11 @@ body {
   transition: opacity .5s ease, visibility .5s ease;
 }
 #splash.gone { opacity: 0; visibility: hidden; pointer-events: none; }
-.splash-mark svg { width: 84px; height: 84px; filter: drop-shadow(0 8px 32px rgba(94,92,230,.4)); animation: splash-pop .7s cubic-bezier(.2,1.4,.4,1) both; }
+.splash-mark { color: var(--text); }
+.splash-mark svg { width: 88px; height: 88px; animation: splash-pop .7s cubic-bezier(.2,1.4,.4,1) both; }
 .splash-title {
-  font-size: 38px; font-weight: 800; letter-spacing: -0.03em;
-  background: linear-gradient(100deg, #0a84ff, #5e5ce6 55%, #bf5af2);
-  -webkit-background-clip: text; background-clip: text; color: transparent;
+  font-size: 40px; font-weight: 750; letter-spacing: -0.035em;
+  color: var(--text);
   animation: splash-up .6s .15s cubic-bezier(.2,.8,.2,1) both;
 }
 .splash-slogan {
