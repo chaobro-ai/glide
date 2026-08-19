@@ -623,6 +623,130 @@ $('#new-project-btn').onclick = () => {
 };
 $('#proj-title').onchange = e => { state.title = e.target.value.trim() || 'Untitled showcase'; };
 
+// ------------------------------------------------------------ gallery ----
+let galleryData = null;
+
+async function ensureGalleryData() {
+  if (galleryData) return galleryData;
+  try {
+    const res = await fetch('/gallery/gallery.json');
+    galleryData = await res.json();
+  } catch (e) {
+    toast('Gallery unavailable');
+    galleryData = { packs: [] };
+  }
+  return galleryData;
+}
+
+function renderGalleryPacks() {
+  const wrap = $('#gal-packs');
+  wrap.innerHTML = '';
+  for (const pack of galleryData.packs) {
+    const card = document.createElement('div');
+    card.className = 'pack-card';
+    const cover = `/gallery/${pack.images[0].file}`;
+    card.innerHTML = `
+      <img class="pack-cover" src="${cover}" alt="${pack.name}" loading="lazy" />
+      <span class="pack-count">${pack.images.length} images</span>
+      <div class="pack-meta">
+        <h3>${pack.name}</h3>
+        <p>${pack.desc}</p>
+      </div>`;
+    card.onclick = () => openPackDetail(pack);
+    wrap.appendChild(card);
+  }
+}
+
+function openPackDetail(pack) {
+  $('#gal-packs').classList.add('hidden');
+  $('#gal-packs').style.display = 'none';
+  const detail = $('#gal-detail');
+  detail.classList.remove('hidden');
+  $('#gal-back').classList.remove('hidden');
+  $('#gal-heading').textContent = pack.name;
+  $('#gal-sub').textContent = pack.desc;
+
+  detail.innerHTML = `
+    <div class="gal-detail-head">
+      <div>
+        <h3>${pack.name} <span style="color:var(--muted);font-weight:400;font-size:14px;">· ${pack.images.length} AI-generated images</span></h3>
+        <p>Loads into the editor with the "${templateById(pack.template)?.name || pack.template}" template.</p>
+      </div>
+      <div class="gal-detail-actions">
+        <button class="primary-btn" id="pack-load">Load into editor</button>
+      </div>
+    </div>
+    <div class="gal-grid">
+      ${pack.images.map((im, k) => `
+        <figure class="gal-item">
+          <img src="/gallery/${im.file}" alt="${im.prompt}" loading="lazy" />
+          <figcaption>${im.prompt}</figcaption>
+        </figure>`).join('')}
+    </div>
+    <p class="gen-note">✦ All images in this pack were generated with AI (Alibaba Cloud Bailian · Qwen-Image).</p>`;
+
+  $('#pack-load').onclick = () => loadPackIntoEditor(pack);
+  $('#gal-body').scrollTop = 0;
+}
+
+async function loadPackIntoEditor(pack) {
+  // size slots to the pack
+  setSlotCount(pack.images.length);
+  // apply the matching template to the selected scene
+  applyTemplateToSelected(pack.template);
+  // load each image into its slot
+  let loaded = 0;
+  await Promise.all(pack.images.map((im, i) => new Promise(resolve => {
+    const img = new Image();
+    img.onload = () => {
+      const cv = document.createElement('canvas');
+      const scale = Math.min(1, 1280 / img.width);
+      cv.width = Math.round(img.width * scale);
+      cv.height = Math.round(img.height * scale);
+      cv.getContext('2d').drawImage(img, 0, 0, cv.width, cv.height);
+      const tex = new THREE.CanvasTexture(cv);
+      tex.colorSpace = THREE.SRGBColorSpace;
+      disposeMedia(i);
+      state.media[i] = { type: 'image', texture: tex, name: im.file };
+      engine.setTexture(i, tex);
+      loaded++;
+      resolve();
+    };
+    img.onerror = () => resolve();
+    img.src = `/gallery/${im.file}`;
+  })));
+  buildSlots();
+  closeGallery();
+  toast(`Loaded ${loaded}/${pack.images.length} images — ${templateById(pack.template)?.name || pack.template}`);
+}
+
+function openGallery() {
+  ensureGalleryData().then(() => {
+    renderGalleryPacks();
+    $('#gal-detail').classList.add('hidden');
+    $('#gal-packs').style.display = '';
+    $('#gal-packs').classList.remove('hidden');
+    $('#gal-back').classList.add('hidden');
+    $('#gal-heading').textContent = 'Gallery';
+    $('#gal-sub').textContent = 'Curated image packs, generated with AI. Click a pack to preview, load it into the editor, and export.';
+    $('#gallery').classList.remove('hidden');
+  });
+}
+
+function closeGallery() { $('#gallery').classList.add('hidden'); }
+
+$('#gallery-btn').onclick = openGallery;
+$('#gal-close').onclick = closeGallery;
+$('#gal-back').onclick = () => {
+  $('#gal-detail').classList.add('hidden');
+  $('#gal-packs').style.display = '';
+  $('#gal-packs').classList.remove('hidden');
+  $('#gal-back').classList.add('hidden');
+  $('#gal-heading').textContent = 'Gallery';
+  $('#gal-sub').textContent = 'Curated image packs, generated with AI. Click a pack to preview, load it into the editor, and export.';
+};
+window.addEventListener('keydown', e => { if (e.key === 'Escape' && !$('#gallery').classList.contains('hidden')) closeGallery(); });
+
 // ------------------------------------------------------------ splash ----
 const splash = $('#splash');
 function dismissSplash() {

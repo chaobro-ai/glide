@@ -73,6 +73,7 @@
     </div>
     <input id="proj-title" class="title-input" value="Untitled showcase" spellcheck="false" />
     <div class="top-actions">
+      <button id="gallery-btn" class="ghost-btn" title="Template gallery">Gallery</button>
       <button id="new-project-btn" class="icon-btn" title="New project">
         <svg width="15" height="15" viewBox="0 0 24 24" fill="none"><path d="M12 5v14M5 12h14" stroke="currentColor" stroke-width="1.8" stroke-linecap="round"/></svg>
       </button>
@@ -224,6 +225,24 @@
         <button id="export-cancel" class="secondary-btn">Cancel</button>
         <button id="export-go" class="primary-btn">Start Export</button>
       </div>
+    </div>
+  </div>
+
+  <!-- Gallery layer -->
+  <div id="gallery" class="hidden">
+    <header class="gal-head">
+      <button id="gal-back" class="ghost-btn hidden">← Back</button>
+      <div class="gal-title">
+        <h2 id="gal-heading">Gallery</h2>
+        <p id="gal-sub">Curated image packs, generated with AI. Click a pack to preview, load it into the editor, and export.</p>
+      </div>
+      <button id="gal-close" class="icon-btn" title="Close gallery">
+        <svg width="15" height="15" viewBox="0 0 24 24" fill="none"><path d="M6 6l12 12M18 6L6 18" stroke="currentColor" stroke-width="1.8" stroke-linecap="round"/></svg>
+      </button>
+    </header>
+    <div id="gal-body">
+      <div id="gal-packs" class="gal-packs"></div>
+      <div id="gal-detail" class="gal-detail hidden"></div>
     </div>
   </div>
 

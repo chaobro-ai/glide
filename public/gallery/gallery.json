@@ -1,0 +1,228 @@
+{
+  "packs": [
+    {
+      "id": "travel",
+      "name": "Travel",
+      "desc": "Golden-hour journeys",
+      "template": "showcase-stream",
+      "images": [
+        {
+          "file": "travel/01.jpg",
+          "prompt": "Sunlit Mediterranean coastal town, white houses and blue shutters above turquoise sea, golden hour, editorial travel photography"
+        },
+        {
+          "file": "travel/02.jpg",
+          "prompt": "Quiet Kyoto alley at dusk, wooden machiya houses, warm lantern glow, cinematic travel photography"
+        },
+        {
+          "file": "travel/03.jpg",
+          "prompt": "Alpine lake at sunrise with mirror reflection of snow peaks, crisp air, landscape photography"
+        },
+        {
+          "file": "travel/04.jpg",
+          "prompt": "Sahara desert dunes at sunset, lone camel caravan silhouette, warm amber tones, travel editorial"
+        },
+        {
+          "file": "travel/05.jpg",
+          "prompt": "Tropical beach with turquoise water and white sand, palm shadows, aerial drone photography"
+        },
+        {
+          "file": "travel/06.jpg",
+          "prompt": "Iceland aurora borealis over a black sand beach, green ribbons in night sky, long exposure"
+        }
+      ]
+    },
+    {
+      "id": "architecture",
+      "name": "Architecture",
+      "desc": "Lines, light, concrete",
+      "template": "grid-reveal",
+      "images": [
+        {
+          "file": "architecture/01.jpg",
+          "prompt": "Minimalist concrete museum facade with dramatic diagonal shadows, architectural photography"
+        },
+        {
+          "file": "architecture/02.jpg",
+          "prompt": "Spiral staircase viewed from below, white curves and soft daylight, abstract architecture"
+        },
+        {
+          "file": "architecture/03.jpg",
+          "prompt": "Glass skyscraper reflecting sunset clouds, low angle, urban architecture photography"
+        },
+        {
+          "file": "architecture/04.jpg",
+          "prompt": "Japanese minimal interior with shoji screens and soft morning light, interior photography"
+        },
+        {
+          "file": "architecture/05.jpg",
+          "prompt": "Brutalist concrete structure against deep blue sky, geometric patterns, architecture editorial"
+        },
+        {
+          "file": "architecture/06.jpg",
+          "prompt": "Arched colonnade corridor with repeating shadows, warm stone, symmetrical architectural photo"
+        }
+      ]
+    },
+    {
+      "id": "product",
+      "name": "Product",
+      "desc": "Studio-grade stills",
+      "template": "orbit-carousel",
+      "images": [
+        {
+          "file": "product/01.jpg",
+          "prompt": "Floating white sneaker product shot on seamless grey studio background, soft shadow, commercial photography"
+        },
+        {
+          "file": "product/02.jpg",
+          "prompt": "Luxury wristwatch macro shot with brushed metal detail, dark studio background, product photography"
+        },
+        {
+          "file": "product/03.jpg",
+          "prompt": "Amber perfume bottle on wet black stone with dramatic rim light, product advertising shot"
+        },
+        {
+          "file": "product/04.jpg",
+          "prompt": "Wireless headphones levitating over pastel gradient studio backdrop, minimal product photography"
+        },
+        {
+          "file": "product/05.jpg",
+          "prompt": "Smartphone with glowing screen hovering at angle, dark reflective surface, tech product shot"
+        },
+        {
+          "file": "product/06.jpg",
+          "prompt": "Skincare serum bottle with water droplets and soft daylight, clean beauty product photography"
+        }
+      ]
+    },
+    {
+      "id": "food",
+      "name": "Food",
+      "desc": "Taste in frames",
+      "template": "cover-flow",
+      "images": [
+        {
+          "file": "food/01.jpg",
+          "prompt": "Overhead shot of latte art coffee and croissant on linen tablecloth, warm morning light, food photography"
+        },
+        {
+          "file": "food/02.jpg",
+          "prompt": "Sushi omakase platter on dark slate board, chef precision, moody food photography"
+        },
+        {
+          "file": "food/03.jpg",
+          "prompt": "Layered pastry with caramel drizzle mid-pour, dark background, high speed food photography"
+        },
+        {
+          "file": "food/04.jpg",
+          "prompt": "Rustic sourdough bread with flour dust in bakery window light, editorial food photography"
+        },
+        {
+          "file": "food/05.jpg",
+          "prompt": "Colorful poke bowl with salmon and avocado on marble counter, bright food photography"
+        },
+        {
+          "file": "food/06.jpg",
+          "prompt": "Chocolate tart with gold leaf on black ceramic plate, fine dining plating, food photography"
+        }
+      ]
+    },
+    {
+      "id": "nature",
+      "name": "Nature",
+      "desc": "Wild & breathing",
+      "template": "depth-stack",
+      "images": [
+        {
+          "file": "nature/01.jpg",
+          "prompt": "Misty pine forest at dawn with sun rays piercing fog, atmospheric landscape photography"
+        },
+        {
+          "file": "nature/02.jpg",
+          "prompt": "Ocean wave curling in teal light, shot from water level, dramatic seascape photography"
+        },
+        {
+          "file": "nature/03.jpg",
+          "prompt": "Snow capped mountain peaks above sea of clouds at sunrise, aerial landscape photography"
+        },
+        {
+          "file": "nature/04.jpg",
+          "prompt": "Autumn maple forest path covered in red leaves, soft golden light, nature photography"
+        },
+        {
+          "file": "nature/05.jpg",
+          "prompt": "Macro dew drops on green leaf at sunrise, shallow depth of field, nature macro photography"
+        },
+        {
+          "file": "nature/06.jpg",
+          "prompt": "Lone wildflower field under dramatic storm clouds, cinematic nature photography"
+        }
+      ]
+    },
+    {
+      "id": "portrait",
+      "name": "Portrait",
+      "desc": "Editorial faces",
+      "template": "focus-shift",
+      "images": [
+        {
+          "file": "portrait/01.jpg",
+          "prompt": "Studio portrait of woman with freckles in soft window light, neutral tones, editorial photography"
+        },
+        {
+          "file": "portrait/02.jpg",
+          "prompt": "Man in tailored suit against seamless grey backdrop, confident pose, fashion editorial portrait"
+        },
+        {
+          "file": "portrait/03.jpg",
+          "prompt": "Dancer in motion with flowing fabric, dramatic side light, black background, artistic portrait"
+        },
+        {
+          "file": "portrait/04.jpg",
+          "prompt": "Elderly craftsman portrait with warm smile, textured skin detail, rembrandt lighting"
+        },
+        {
+          "file": "portrait/05.jpg",
+          "prompt": "Fashion model with bold red background and shadow play, high contrast editorial portrait"
+        },
+        {
+          "file": "portrait/06.jpg",
+          "prompt": "Child laughing in golden hour field, bokeh background, candid portrait photography"
+        }
+      ]
+    },
+    {
+      "id": "art",
+      "name": "Art & Abstract",
+      "desc": "Pure form & color",
+      "template": "mosaic-marquee",
+      "images": [
+        {
+          "file": "art/01.jpg",
+          "prompt": "Flowing liquid ink in deep blue and gold, macro abstract art, high detail"
+        },
+        {
+          "file": "art/02.jpg",
+          "prompt": "Geometric paper art installation with layered pastel shapes and shadows, minimal abstract"
+        },
+        {
+          "file": "art/03.jpg",
+          "prompt": "Holographic iridescent fluid surface, futuristic abstract art, ultra detailed"
+        },
+        {
+          "file": "art/04.jpg",
+          "prompt": "Abstract sand ripple patterns in warm desert tones, minimalist fine art photography"
+        },
+        {
+          "file": "art/05.jpg",
+          "prompt": "Colorful paint explosion frozen in mid-air against black background, high speed art photography"
+        },
+        {
+          "file": "art/06.jpg",
+          "prompt": "Minimalist gradient light study with soft curved shadows, abstract fine art"
+        }
+      ]
+    }
+  ]
+}
