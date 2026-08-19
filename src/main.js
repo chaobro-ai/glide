@@ -1,6 +1,6 @@
 // Images of Yours — main app (scenes, video media, WebCodecs export, project files)
 import * as THREE from 'three';
-import { IoyEngine, ASPECTS, TRANSITIONS, makeDemoTexture } from './engine.js';
+import { IoyEngine, ASPECTS, TRANSITIONS, makeDemoTexture, fitCoverToCard, applyCoverCropToTexture } from './engine.js';
 import { TEMPLATES, CATEGORIES, templateById } from './templates.js';
 import { Timeline } from './timeline.js';
 import { exportWebCodecs, exportRealtime, webCodecsSupported } from './exporter.js';
@@ -220,6 +220,7 @@ function loadMediaIntoSlot(i, file) {
       v.play().catch(() => {});
       const tex = new THREE.VideoTexture(v);
       tex.colorSpace = THREE.SRGBColorSpace;
+      applyCoverCropToTexture(tex, v.videoWidth, v.videoHeight);
       state.media[i] = { type: 'video', texture: tex, url, el: v, name: file.name };
       engine.setTexture(i, tex);
       buildSlots();
@@ -229,11 +230,7 @@ function loadMediaIntoSlot(i, file) {
     const url = URL.createObjectURL(file);
     const img = new Image();
     img.onload = () => {
-      const cv = document.createElement('canvas');
-      const scale = Math.min(1, 1280 / img.width);
-      cv.width = Math.round(img.width * scale);
-      cv.height = Math.round(img.height * scale);
-      cv.getContext('2d').drawImage(img, 0, 0, cv.width, cv.height);
+      const cv = fitCoverToCard(img, 1280);
       const tex = new THREE.CanvasTexture(cv);
       tex.colorSpace = THREE.SRGBColorSpace;
       state.media[i] = { type: 'image', texture: tex, url, name: file.name };
@@ -564,7 +561,8 @@ async function openProjectFile(file) {
       if (s.type === 'image' && s.data) {
         const img = new Image();
         img.onload = () => {
-          const tex = new THREE.CanvasTexture(img);
+          const cv = fitCoverToCard(img, 1280);
+          const tex = new THREE.CanvasTexture(cv);
           tex.colorSpace = THREE.SRGBColorSpace;
           state.media[i] = { type: 'image', texture: tex };
           engine.setTexture(i, tex);
@@ -578,6 +576,7 @@ async function openProjectFile(file) {
           v.play().catch(() => {});
           const tex = new THREE.VideoTexture(v);
           tex.colorSpace = THREE.SRGBColorSpace;
+          applyCoverCropToTexture(tex, v.videoWidth, v.videoHeight);
           state.media[i] = { type: 'video', texture: tex, el: v, name: s.name };
           engine.setTexture(i, tex);
           buildSlots();
@@ -699,11 +698,7 @@ async function loadPackIntoEditor(pack) {
   await Promise.all(pack.images.map((im, i) => new Promise(resolve => {
     const img = new Image();
     img.onload = () => {
-      const cv = document.createElement('canvas');
-      const scale = Math.min(1, 1280 / img.width);
-      cv.width = Math.round(img.width * scale);
-      cv.height = Math.round(img.height * scale);
-      cv.getContext('2d').drawImage(img, 0, 0, cv.width, cv.height);
+      const cv = fitCoverToCard(img, 1280);
       const tex = new THREE.CanvasTexture(cv);
       tex.colorSpace = THREE.SRGBColorSpace;
       disposeMedia(i);

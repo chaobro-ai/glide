@@ -7,6 +7,46 @@ export const ASPECTS = {
 };
 export const CARD_W = 1.75;
 export const CARD_H = 1.1;
+export const CARD_ASPECT = CARD_W / CARD_H; // cards are always this aspect — media must be fit to it
+
+// Cover-fit any image/canvas/video frame to the card aspect (no stretching).
+// Crops the centered region that matches CARD_ASPECT, like CSS object-fit: cover.
+export function fitCoverToCard(source, maxW = 1280) {
+  const iw = source.videoWidth || source.naturalWidth || source.width;
+  const ih = source.videoHeight || source.naturalHeight || source.height;
+  const srcAR = iw / ih;
+  let sx = 0, sy = 0, sw = iw, sh = ih;
+  if (srcAR > CARD_ASPECT) {
+    sw = ih * CARD_ASPECT;      // source wider than card → crop left/right
+    sx = (iw - sw) / 2;
+  } else {
+    sh = iw / CARD_ASPECT;      // source taller than card → crop top/bottom
+    sy = (ih - sh) / 2;
+  }
+  const outW = Math.max(2, Math.min(maxW, Math.round(sw)));
+  const outH = Math.max(2, Math.round(outW / CARD_ASPECT));
+  const cv = document.createElement('canvas');
+  cv.width = outW; cv.height = outH;
+  cv.getContext('2d').drawImage(source, sx, sy, sw, sh, 0, 0, outW, outH);
+  return cv;
+}
+
+// Cover-fit a live texture (VideoTexture) via repeat/offset window — no redraw cost.
+export function applyCoverCropToTexture(tex, iw, ih) {
+  const srcAR = iw / ih;
+  if (srcAR > CARD_ASPECT) {
+    const f = CARD_ASPECT / srcAR;
+    tex.repeat.set(f, 1);
+    tex.offset.set((1 - f) / 2, 0);
+  } else if (srcAR < CARD_ASPECT) {
+    const f = srcAR / CARD_ASPECT;
+    tex.repeat.set(1, f);
+    tex.offset.set(0, (1 - f) / 2);
+  } else {
+    tex.repeat.set(1, 1);
+    tex.offset.set(0, 0);
+  }
+}
 
 const TAU = Math.PI * 2;
 
@@ -22,7 +62,16 @@ function roundedPlaneGeo(w, h, r, segs = 8) {
   shape.quadraticCurveTo(x, y + h, x, y + h - r);
   shape.lineTo(x, y + r);
   shape.quadraticCurveTo(x, y, x + r, y);
-  return new THREE.ShapeGeometry(shape, segs);
+  const geo = new THREE.ShapeGeometry(shape, segs);
+  // three.js ShapeGeometry emits WORLD-space UVs; normalize to 0..1 so
+  // textures map correctly onto the card (was the root cause of stretched
+  // / edge-smeared images on real photos).
+  const uv = geo.attributes.uv;
+  for (let i = 0; i < uv.count; i++) {
+    uv.setXY(i, (uv.getX(i) + w / 2) / w, (uv.getY(i) + h / 2) / h);
+  }
+  uv.needsUpdate = true;
+  return geo;
 }
 
 const SLOT_PALETTE = [0x2d3654, 0x3a2d54, 0x2d544a, 0x54402d, 0x542d3a, 0x2d4754];
@@ -147,8 +196,14 @@ class Stage {
           cached?.dispose();
           const tex = srcTex.clone();
           tex.needsUpdate = true;
-          tex.repeat.set(1 / cols, 1 / rows);
-          tex.offset.set((j % cols) / cols, 1 - (Math.floor(j / cols) + 1) / rows);
+          // Compose piece window with any base cover-crop window (videos
+          // carry repeat/offset < 1; images are pre-cropped so base is 1/0).
+          const br = srcTex.repeat, bo = srcTex.offset;
+          tex.repeat.set(br.x / cols, br.y / rows);
+          tex.offset.set(
+            bo.x + (j % cols) / cols * br.x,
+            bo.y + (1 - (Math.floor(j / cols) + 1) / rows) * br.y,
+          );
           tex.userData.srcUuid = srcTex.uuid;
           entry.texCache[j] = tex;
         }
