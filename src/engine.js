@@ -92,6 +92,9 @@ class Stage {
     this.tilt = 0;
     this._pieceCache = new Map();   // key -> { group, meshes, texCache }
     this._pieceGeoCache = new Map();
+    this._visibleMeshes = [];
+    this._worldPosition = new THREE.Vector3();
+    this._worldScale = new THREE.Vector3();
 
     for (let i = 0; i < maxSlots; i++) {
       const mat = new THREE.MeshBasicMaterial({ transparent: true, side: THREE.DoubleSide });
@@ -132,6 +135,13 @@ class Stage {
   // render one frame of `template` at progress p
   render(template, p) {
     const n = this.activeCount;
+    this._visibleMeshes.length = 0;
+    // Piece meshes belong to a template/slot cache. Hide the previous frame
+    // before revealing the pieces used by this frame, including slots which
+    // may no longer be active after the media count changes.
+    for (const entry of this._pieceCache.values()) {
+      for (const mesh of entry.meshes) mesh.visible = false;
+    }
     for (let i = 0; i < this.cards.length; i++) {
       const mesh = this.cards[i];
       if (i >= n) { mesh.visible = false; continue; }
@@ -148,9 +158,10 @@ class Stage {
       mesh.scale.set(s, s * sy, 1);
       mesh.material.opacity = t.o != null ? t.o : 1;
       mesh.visible = (t.o != null ? t.o : 1) > 0.005;
+      if (mesh.visible) this._visibleMeshes.push(mesh);
     }
-    this.camera.position.set(0, 0, 7.5 / this.zoom);
     this.group.rotation.x = THREE.MathUtils.degToRad(this.tilt);
+    this._centerCameraOnContent();
   }
 
   _renderPieces(template, slotIdx, n, p) {
@@ -214,7 +225,52 @@ class Stage {
         mesh.material.color.set(SLOT_PALETTE[slotIdx % SLOT_PALETTE.length]);
       }
       mesh.material.needsUpdate = true;
+      this._visibleMeshes.push(mesh);
     }
+  }
+
+  // Zoom used to keep its camera at world origin. That means asymmetric and
+  // moving layouts visibly drifted to one side as the camera moved closer.
+  // We keep the camera looking straight ahead, but move its X/Y focal point to
+  // the perspective- and opacity-weighted centre of the visible media.
+  _centerCameraOnContent() {
+    const cameraZ = 7.5 / this.zoom;
+    if (!this._visibleMeshes.length) {
+      this.camera.position.set(0, 0, cameraZ);
+      return;
+    }
+
+    this.scene.updateMatrixWorld(true);
+    let totalWeight = 0;
+    let centerX = 0;
+    let centerY = 0;
+
+    for (const mesh of this._visibleMeshes) {
+      if (!mesh.visible || mesh.material.opacity <= 0.005) continue;
+      mesh.getWorldPosition(this._worldPosition);
+      mesh.getWorldScale(this._worldScale);
+
+      const geometry = mesh.geometry;
+      if (!geometry.boundingBox) geometry.computeBoundingBox();
+      const box = geometry.boundingBox;
+      const area = (box.max.x - box.min.x) * (box.max.y - box.min.y);
+      const depth = Math.max(0.25, cameraZ - this._worldPosition.z);
+      const weight = area
+        * Math.abs(this._worldScale.x * this._worldScale.y)
+        * mesh.material.opacity
+        / (depth * depth);
+
+      centerX += this._worldPosition.x * weight;
+      centerY += this._worldPosition.y * weight;
+      totalWeight += weight;
+    }
+
+    this.camera.position.set(
+      totalWeight ? centerX / totalWeight : 0,
+      totalWeight ? centerY / totalWeight : 0,
+      cameraZ,
+    );
+    this.camera.rotation.set(0, 0, 0);
   }
 
   clearPieces() {
