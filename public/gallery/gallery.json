@@ -132,7 +132,7 @@
       "id": "nature",
       "name": "Nature",
       "desc": "Wild & breathing",
-      "template": "depth-stack",
+      "template": "depth-stack-scroll",
       "images": [
         {
           "file": "nature/01.jpg",

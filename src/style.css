@@ -48,6 +48,11 @@ body {
   -webkit-backdrop-filter: saturate(180%) blur(20px);
   border-bottom: 1px solid var(--border);
 }
+.editor-home-link {
+  color: var(--muted2); text-decoration: none; font-size: 12px; font-weight: 600;
+  padding: 5px 8px; border-radius: 7px; transition: color .15s ease, background .15s ease;
+}
+.editor-home-link:hover { color: var(--text); background: var(--panel2); }
 .logo { display: flex; align-items: center; gap: 9px; color: var(--text); user-select: none; cursor: default; }
 .logo-mark { flex-shrink: 0; color: var(--text); }
 .logo-text {
