@@ -26,6 +26,11 @@ const state = {
   tilt: 0,
 };
 
+const requestedTemplateId = new URLSearchParams(window.location.search).get('template');
+if (requestedTemplateId && templateById(requestedTemplateId)) {
+  state.scenes[0].templateId = requestedTemplateId;
+}
+
 const timeline = new Timeline();
 const engine = new IoyEngine($('#view'));
 engine.setBackground(state.background);

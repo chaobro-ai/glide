@@ -52,10 +52,10 @@
   <header class="marketing-nav">
     <a class="brand" href="/" aria-label="Images of Yours home"><span class="brand-mark">I</span> IMAGES OF YOURS</a>
     <nav class="nav-links" aria-label="Primary navigation">
-      <a href="/templates/">Templates</a>
-      <a href="/gallery/">Gallery</a>
-      <a href="/how-to/create-a-photo-motion-reel/">Guides</a>
-      <a class="nav-create" href="/create/">Open editor</a>
+      <a href="/templates/" data-analytics-event="cta_view_templates" data-analytics-placement="nav">Templates</a>
+      <a href="/gallery/" data-analytics-event="cta_view_gallery" data-analytics-placement="nav">Gallery</a>
+      <a href="/how-to/create-a-photo-motion-reel/" data-analytics-event="cta_view_guides" data-analytics-placement="nav">Guides</a>
+      <a class="nav-create" href="/create/" data-analytics-event="cta_open_editor" data-analytics-placement="nav">Open editor</a>
     </nav>
   </header>
 
@@ -69,15 +69,36 @@
       </div>
       <div class="hero-copy">
         <p class="eyebrow">Image motion studio / in your browser</p>
-        <h1 id="hero-title">Turn still work into a moving showcase.</h1>
+        <h1 id="hero-title">Create image motion videos from your own images.</h1>
         <p class="hero-lede">Start with a motion template, build scenes from your own images or video, direct the camera with keyframes, then export a finished film in HD.</p>
         <div class="hero-actions">
-          <a class="button button-primary" href="/create/">Open the editor <span aria-hidden="true">↗</span></a>
-          <a class="button button-quiet" href="/templates/">Explore 59 templates</a>
+          <a class="button button-primary" href="/create/" data-analytics-event="cta_open_editor" data-analytics-placement="hero">Open the editor <span aria-hidden="true">↗</span></a>
+          <a class="button button-quiet" href="/templates/" data-analytics-event="cta_view_templates" data-analytics-placement="hero">Explore 59 templates</a>
         </div>
         <p class="hero-note">MULTI-SCENE · KEYFRAMES · MP4 / WEBM EXPORT</p>
       </div>
       <p class="hero-index">IOY / 01 — MAKE A MEMORY MOVE</p>
+    </section>
+
+    <section class="template-preview" data-template-preview aria-labelledby="preview-title">
+      <div class="preview-copy">
+        <p class="section-label">Live template preview</p>
+        <h2 id="preview-title">One collection. Three distinct kinds of motion.</h2>
+        <p>This is the same browser rendering system used in the editor. Switch the template to see how a small image set can flow, focus, or reveal itself before you begin.</p>
+        <div class="preview-controls" role="group" aria-label="Choose a template preview">
+          <button class="preview-template is-active" type="button" data-preview-template="showcase-stream" aria-pressed="true">Showcase Stream</button>
+          <button class="preview-template" type="button" data-preview-template="grid-reveal" aria-pressed="false">Grid Reveal</button>
+          <button class="preview-template" type="button" data-preview-template="cover-flow" aria-pressed="false">Cover Flow</button>
+        </div>
+      </div>
+      <div class="preview-stage">
+        <div class="preview-stage-top"><span class="preview-status" aria-live="polite">SHOWCASE STREAM / 06 IMAGES</span><button class="preview-play" type="button" data-preview-toggle aria-pressed="false">Pause motion</button></div>
+        <div class="preview-canvas-wrap">
+          <canvas id="template-preview-canvas" aria-label="Animated preview of the selected Images of Yours motion template"></canvas>
+          <div class="preview-fallback">A browser with WebGL is required for the live preview. <a href="/create/" data-analytics-event="cta_open_editor" data-analytics-placement="preview_fallback">Open the editor instead.</a></div>
+        </div>
+        <div class="preview-stage-foot"><p>Preview your own media, scenes, camera keyframes, and export settings in the full editor.</p><a class="button button-primary" href="/create/?template=showcase-stream" data-preview-open-editor data-analytics-event="cta_open_editor" data-analytics-placement="template_preview">Open this template in the editor <span aria-hidden="true">↗</span></a></div>
+      </div>
     </section>
 
     <section class="section" aria-labelledby="workflow-title">
@@ -119,7 +140,7 @@
         <div class="template-chip" aria-hidden="true"><small>03 / spatial</small><strong>Isometric</strong></div>
         <div class="template-chip" aria-hidden="true"><small>04 / circular</small><strong>Orbit</strong></div>
       </div>
-      <a class="template-link" href="/templates/">See the template system in detail →</a>
+      <a class="template-link" href="/templates/" data-analytics-event="cta_view_templates" data-analytics-placement="template_rail">See the template system in detail →</a>
     </section>
 
     <section class="section" aria-labelledby="gallery-title">
@@ -137,7 +158,7 @@
           <article><img src="/gallery/art/01.jpg" width="1280" height="720" alt="Blue and gold ink image from the art gallery" /><div class="gallery-caption"><span>Gallery pack / 06 images</span><strong>Art &amp; Abstract — Pure form &amp; color</strong></div></article>
         </div>
       </div>
-      <p class="gallery-cta">Browse all seven packs, preview their material, then load one directly into the editor. <a href="/gallery/">Visit the gallery →</a></p>
+      <p class="gallery-cta">Browse all seven packs, preview their material, then load one directly into the editor. <a href="/gallery/" data-analytics-event="cta_view_gallery" data-analytics-placement="gallery_section">Visit the gallery →</a></p>
     </section>
 
     <section class="section" aria-label="Product capabilities">
@@ -154,9 +175,11 @@
       </div>
     </section>
 
-    <section class="section final-cta" aria-labelledby="cta-title"><p class="section-label">Ready when the work is</p><h2 id="cta-title">Give your images a second life in motion.</h2><p>Open a clean canvas, choose a template, and turn a collection into a finished visual sequence.</p><a class="button button-primary" href="/create/">Start creating <span aria-hidden="true">↗</span></a></section>
+    <section class="section final-cta" aria-labelledby="cta-title"><p class="section-label">Ready when the work is</p><h2 id="cta-title">Give your images a second life in motion.</h2><p>Open a clean canvas, choose a template, and turn a collection into a finished visual sequence.</p><a class="button button-primary" href="/create/" data-analytics-event="cta_open_editor" data-analytics-placement="final_cta">Start creating <span aria-hidden="true">↗</span></a></section>
   </main>
 
-  <footer class="footer"><span>© 2026 IMAGES OF YOURS</span><span><a href="/templates/">Templates</a> · <a href="/gallery/">Gallery</a> · <a href="/create/">Editor</a></span></footer>
+  <footer class="footer"><span>© 2026 IMAGES OF YOURS</span><span><a href="/templates/" data-analytics-event="cta_view_templates" data-analytics-placement="footer">Templates</a> · <a href="/gallery/" data-analytics-event="cta_view_gallery" data-analytics-placement="footer">Gallery</a> · <a href="/create/" data-analytics-event="cta_open_editor" data-analytics-placement="footer">Editor</a></span></footer>
+  <script type="module" src="/src/home-analytics.js"></script>
+  <script type="module" src="/src/home-preview.js"></script>
 </body>
 </html>
