@@ -3,7 +3,11 @@
   "main": "worker.js",
   "compatibility_date": "2026-08-01",
   "workers_dev": false,
-  "custom_domains": [
-    { "hostname": "a.chaobro.com", "zone_name": "chaobro.com" }
+  "account_id": "3c772e18744e927e0eda39ca57aac390",
+  "routes": [
+    {
+      "pattern": "motion.ioy.ai",
+      "custom_domain": true
+    }
   ]
 }

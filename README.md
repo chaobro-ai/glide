@@ -2,7 +2,7 @@
 
 **Your images, set in motion.** Turn your still images into cinematic motion showcases — pick a template, drop in your work, export HD video in seconds. Everything runs in your browser.
 
-Live at **[ioy.ai](https://ioy.ai)**
+Live at **[motion.ioy.ai](https://motion.ioy.ai)**
 
 ## Features
 
@@ -22,7 +22,7 @@ Live at **[ioy.ai](https://ioy.ai)**
 - Dual-stage render engine with GLSL transition compositor
 - WebCodecs + mp4-muxer / webm-muxer for offline encoding
 - captureStream + MediaRecorder as realtime fallback
-- Deployed on Cloudflare Pages behind an edge Worker on ioy.ai
+- Deployed on Cloudflare Pages behind an edge Worker on motion.ioy.ai
 
 ## Template system
 
@@ -42,7 +42,7 @@ npm run build    # production build → dist/
 wrangler pages deploy dist --project-name animos-clone --branch main
 ```
 
-`ioy.ai` is served by the `animos-chaobro` Worker (route `ioy.ai/*`), which proxies the Pages production deployment.
+`motion.ioy.ai` is served by the `animos-chaobro` Worker (custom domain `motion.ioy.ai`), which proxies the Pages production deployment.
 
 ## Project structure
 
@@ -55,9 +55,13 @@ src/timeline.js       # multi-scene timeline evaluator
 src/exporter.js       # WebCodecs + MediaRecorder export
 src/templates.js      # 59 templates
 src/style.css         # Apple-style design system
-worker/               # Cloudflare Worker proxy for ioy.ai
+worker/               # Cloudflare Worker proxy for motion.ioy.ai
 ```
 
 ## License
 
 MIT
+
+## Domain migration (2026-10-03)
+
+The original image-motion application now uses `https://motion.ioy.ai`. The root `https://ioy.ai` hosts the separate SaaS starter website. Canonical, Open Graph, structured-data URLs, sitemap and robots now use the motion domain. Cloudflare attaches the subdomain to the existing `animos-chaobro` Worker, which retains the original Pages project and deployment history.
